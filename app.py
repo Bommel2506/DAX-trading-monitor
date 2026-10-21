@@ -108,3 +108,37 @@ else:
     except Exception:pass
 st.divider()
 st.caption(f'Stand der Abfrage: {now:%d.%m.%Y %H:%M} Europe/Berlin. Abfragezeit ist nicht gleich Kurszeit. Datenquelle: Yahoo Finance via yfinance, möglicherweise verzögert oder unvollständig. Der M5-Trigger ist nur ein Screening-Proxy. Kein Backtest, keine Broker-API und keine Hintergrundbenachrichtigung im geschlossenen Browser.')
+
+# Telegram-Verbindung: manueller Funktionstest, keine Hintergrundüberwachung.
+st.divider()
+st.subheader('📨 Telegram-Testalarm')
+st.caption('Dieser Test sendet nur nach einem Klick eine Nachricht. Automatische Alarme bei geschlossenem Browser sind noch nicht eingerichtet.')
+if st.button('📲 Testnachricht an Telegram senden', key='telegram_test'):
+    try:
+        import json
+        import urllib.parse
+        import urllib.request
+        token = str(st.secrets['telegram']['bot_token']).strip()
+        chat_id = str(st.secrets['telegram']['chat_id']).strip()
+        if not token or not chat_id:
+            st.error('Telegram-Zugangsdaten fehlen in Streamlit Secrets.')
+        else:
+            payload = urllib.parse.urlencode({
+                'chat_id': chat_id,
+                'text': '✅ DAX-Monitor: Telegram-Test erfolgreich!'
+            }).encode('utf-8')
+            request = urllib.request.Request(
+                f'https://api.telegram.org/bot{token}/sendMessage',
+                data=payload,
+                method='POST'
+            )
+            with urllib.request.urlopen(request, timeout=15) as response:
+                result = json.load(response)
+            if result.get('ok'):
+                st.success('Die Testnachricht wurde an Telegram gesendet. Bitte den Bot-Chat prüfen.')
+            else:
+                st.error('Telegram hat die Nachricht nicht bestätigt. Bitte die Secrets prüfen.')
+    except KeyError:
+        st.error('In Streamlit Secrets fehlen [telegram], bot_token oder chat_id.')
+    except Exception:
+        st.error('Telegram-Test fehlgeschlagen. Bitte Bot-Token, Chat-ID und /start im Bot-Chat prüfen.')
