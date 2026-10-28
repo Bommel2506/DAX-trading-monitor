@@ -55,3 +55,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+if os.getenv("TELEGRAM_TEST") == "1": telegram_senden("DAX-Monitor 2.0: Telegram-Test erfolgreich!")
