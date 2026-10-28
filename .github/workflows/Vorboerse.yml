@@ -1,0 +1,30 @@
+name: DAX Vorboersenbericht
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 6 * * 1-5'
+    - cron: '30 5 * * 1-5'
+    - cron: '45 7 * * 1-5'
+    - cron: '45 6 * * 1-5'
+
+jobs: 
+  vorboerse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Projekt laden
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Abhaengigkeiten installieren
+        run: pip install -r requirements.txt
+
+      - name: Vorboersenbericht starten
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python Vorboerse.py
