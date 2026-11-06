@@ -7,7 +7,11 @@ import requests
 import yfinance as yf
 BERLIN = ZoneInfo("Europe/Berlin")
 AKTIEN = {"Siemens Energy": "ENR.DE"}
-
+def aktienkurs_abrufen(symbol):
+    daten = yf.Ticker(symbol).history(period="5d", interval="1d")
+    if daten.empty:
+        return None  
+    return float(daten["Close"].iloc[-1]), str(daten.index[-1].date())
 def telegram_senden(nachricht):
     token = os.environ.get("TELEGRAM_BOT_TOKEN").strip()
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
