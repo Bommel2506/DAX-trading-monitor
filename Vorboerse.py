@@ -9,7 +9,7 @@ BERLIN = ZoneInfo("Europe/Berlin")
 
 
 def telegram_senden(nachricht):
-    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    token = os.environ.get("TELEGRAM_BOT_TOKEN"),strip()
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
 
     if not token or not chat_id:
