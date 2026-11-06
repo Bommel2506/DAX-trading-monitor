@@ -32,6 +32,7 @@ def telegram_senden(nachricht):
 def main():
     jetzt = datetime.now(BERLIN)
     kursdaten = aktienkurs_abrufen(AKTIEN["Siemens Energy"])
+    print("Siemens Energy Kursdaten:", kursdaten)
     if jetzt.weekday() >= 5:
         print("Wochenende - kein Bericht.")
         return
