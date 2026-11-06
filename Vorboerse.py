@@ -49,7 +49,7 @@ def main():
         kurs_text = "Siemens Energy: Keine Kursdaten verfügbar"
         if kursdaten is not None:
             kurs_text = f"Siemens Energy: Schlusskurs {kursdaten[0]:.2f} EUR vom {kursdaten[1]}"
-        nachricht = (
+    nachricht = (
         "DAX-Monitor 2.0 - TEST\n"
         + bericht
             + "\n" + kurs_text
