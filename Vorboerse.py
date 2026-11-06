@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 import requests
 import yfinance as yf
 BERLIN = ZoneInfo("Europe/Berlin")
-
+AKTIEN = {"Siemens Energy": "ENR.DE"}
 
 def telegram_senden(nachricht):
     token = os.environ.get("TELEGRAM_BOT_TOKEN").strip()
