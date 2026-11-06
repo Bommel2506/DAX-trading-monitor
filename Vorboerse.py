@@ -31,7 +31,7 @@ def telegram_senden(nachricht):
 
 def main():
     jetzt = datetime.now(BERLIN)
-
+    kursdaten = aktienkurs_abrufen(AKTIEN["Siemens Energy"])
     if jetzt.weekday() >= 5:
         print("Wochenende - kein Bericht.")
         return
@@ -46,9 +46,13 @@ def main():
         print("Ausserhalb der Berichtszeiten.")
         return
 
-    nachricht = (
+        kurs_text = "Siemens Energy: Keine Kursdaten verfügbar"
+        if kursdaten is not None:
+            kurs_text = f"Siemens Energy: Schlusskurs {kursdaten[0]:.2f} EUR vom {kursdaten[1]}"
+        nachricht = (
         "DAX-Monitor 2.0 - TEST\n"
         + bericht
+            + "\n" + kurs_text
         + "\nDie automatische Nachricht funktioniert."
         + "\nNoch keine Aktienanalyse oder Handelssignale."
     )
