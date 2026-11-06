@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
 import requests
-
+import yfinance as yf
 BERLIN = ZoneInfo("Europe/Berlin")
 
 
